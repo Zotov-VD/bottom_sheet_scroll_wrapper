@@ -6,13 +6,21 @@ import 'package:flutter/material.dart';
 const double _minFlingVelocity = 700.0;
 const double _closeProgressThreshold = 0.5;
 
+/// Just wrap the [Scrollable] Widget with the [BottomSheetScrollWrapper]
+/// so that dragging the [BottomSheet] works properly
 class BottomSheetScrollWrapper extends StatefulWidget {
   const BottomSheetScrollWrapper({
     super.key,
+    this.scrollController,
     required this.child,
   });
 
+  /// You can provide your [ScrollController]
+  final ScrollController? scrollController;
+
+  /// wrapped child
   final Widget child;
+
   @override
   State<BottomSheetScrollWrapper> createState() =>
       _BottomSheetScrollWrapperState();
@@ -33,7 +41,7 @@ class _BottomSheetScrollWrapperState extends State<BottomSheetScrollWrapper> {
     final bottomSheet = context.findAncestorWidgetOfExactType<BottomSheet>()!;
     _animationController = bottomSheet.animationController!;
     _bottomSheetState = context.findAncestorStateOfType<State<BottomSheet>>()!;
-    _scrollController = ScrollController();
+    _scrollController = widget.scrollController ?? ScrollController();
   }
 
   double get _sheetHeight {
@@ -44,7 +52,9 @@ class _BottomSheetScrollWrapperState extends State<BottomSheetScrollWrapper> {
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    if (widget.scrollController == null) {
+      _scrollController.dispose();
+    }
     super.dispose();
   }
 

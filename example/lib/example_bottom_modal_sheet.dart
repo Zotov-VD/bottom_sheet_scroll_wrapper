@@ -38,7 +38,7 @@ class _ExampleBottomModalSheetState extends State<ExampleBottomModalSheet> {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxHeight: mediaQuery.size.height - mediaQuery.padding.top - 20,
+          maxHeight: mediaQuery.size.height - mediaQuery.padding.top - 50,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
